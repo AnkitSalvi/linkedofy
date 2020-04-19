@@ -12,7 +12,7 @@ CREATE TABLE test.campaign (
     user_license varchar(255),
     campaign_id int NOT NULL primary key AUTO_INCREMENT,
     campaign_date date,
-    module ENUM('auto_connect','broadcast','auto_visit and follow','endorse my contacts','remove connections', 'withdraw invites','create contact list'),
+    module ENUM('auto_connect','broadcast','auto_visit and follow','endorse my contacts','remove connections', 'withdraw autoconnect','create contact list'),
     pages ENUM('search_page','sales_navigator'),
     status ENUM('completed','failed','stopped'),
     foreign key(user_license) references test.users(license)
@@ -27,8 +27,6 @@ CREATE TABLE test.messages_template (
     saved bool,
     foreign key(user_license) references test.users(license)
 );
-
-
 
 
 CREATE TABLE test.inmail_template (
@@ -110,7 +108,7 @@ CREATE TABLE test.contact_list (
 );
 
 
-CREATE TABLE test.invites (
+CREATE TABLE test.autoconnect (
 	id int NOT NULL primary key AUTO_INCREMENT,
     user_license varchar(255),
     campaign_id int,
@@ -131,3 +129,5 @@ CREATE TABLE test.profiles_endorsed (
 	foreign key(user_license) references test.users(license),
     foreign key(campaign_id) references test.campaign(campaign_id)
 );
+
+
