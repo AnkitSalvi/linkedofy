@@ -1,6 +1,6 @@
 
 
-CREATE TABLE {schema_name}.users (
+CREATE TABLE test.users (
     license varchar(255) not null primary key ,
     name varchar(255),
     email varchar(255),
@@ -8,91 +8,94 @@ CREATE TABLE {schema_name}.users (
     plan ENUM('trial','enterprise')
 );
 
-CREATE TABLE {schema_name}.activity (
+CREATE TABLE test.campaign (
     user_license varchar(255),
-    batch_id int not null primary key,
-    activity_date date,
+    campaign_id int NOT NULL primary key AUTO_INCREMENT,
+    campaign_date date,
     module ENUM('auto_connect','broadcast','auto_visit and follow','endorse my contacts','remove connections', 'withdraw invites','create contact list'),
     pages ENUM('search_page','sales_navigator'),
     status ENUM('completed','failed','stopped'),
-    foreign key(user_license) references {schema_name}.users(license)
+    foreign key(user_license) references test.users(license)
 );
 
-CREATE TABLE {schema_name}.messages (
+CREATE TABLE test.messages_template (
     user_license varchar(255),
-    message_id int not null primary key,
+    messages_template_id int not null primary key,
     title varchar(255),
     body text,
     last_used date,
     saved bool,
-    category ENUM('message','inmail'),
-    foreign key(user_license) references {schema_name}.users(license)
+    foreign key(user_license) references test.users(license)
 );
 
 
 
 
-CREATE TABLE {schema_name}.email (
+CREATE TABLE test.inmail_template (
     user_license varchar(255),
-    email_id int not null primary key,
+    inmail_template_id int not null primary key,
     title varchar(255),
     body text,
     last_used date,
     saved bool,
-    foreign key(user_license) references {schema_name}.users(license)
+    foreign key(user_license) references test.users(license)
 );
 
 
-CREATE TABLE {schema_name}.email_sent (
+CREATE TABLE test.inmail (
 	id int NOT NULL primary key AUTO_INCREMENT,
     user_license varchar(255),
-    batch_id int,
-    email_id int,
+    campaign_id int,
+    inmail_template_id int,
     profile_url varchar(255),
     status ENUM('sent','skipped','failed'),
-    foreign key(user_license) references {schema_name}.users(license),
-    foreign key(batch_id) references {schema_name}.activity(batch_id),
-    foreign key(email_id) references {schema_name}.email(email_id)
+    foreign key(user_license) references test.users(license),
+    foreign key(campaign_id) references test.campaign(campaign_id),
+    foreign key(inmail_template_id) references test.inmail_template(inmail_template_id)
 );
 
-CREATE TABLE {schema_name}.reply (
+
+CREATE TABLE test.reply (
 	id int NOT NULL primary key AUTO_INCREMENT,
     user_license varchar(255),
+    campaign_id int,
     reply text,
+    profile_url varchar(255),
     reply_date date,
-    foreign key(user_license) references {schema_name}.users(license)
+    foreign key(user_license) references test.users(license)
 );
 
 
-CREATE TABLE {schema_name}.message_sent (
+CREATE TABLE test.broadcast (
 	id int NOT NULL primary key AUTO_INCREMENT,
     user_license varchar(255),
-    batch_id int,
-    message_id int,
+    campaign_id int,
+    messages_template_id int,
     profile_url varchar(255),
     status ENUM('sent','skipped','failed'),
-    foreign key(user_license) references {schema_name}.users(license),
-    foreign key(batch_id) references {schema_name}.activity(batch_id),
-    foreign key(message_id) references {schema_name}.messages(message_id)
+    foreign key(user_license) references test.users(license),
+    foreign key(campaign_id) references test.campaign(campaign_id),
+    foreign key(messages_template_id) references test.messages_template(messages_template_id)
 );
 
-CREATE TABLE {schema_name}.profiles_visited (
+
+CREATE TABLE test.profiles_visited (
     id int NOT NULL primary key AUTO_INCREMENT,
 	user_license varchar(255),
-    batch_id int,
+    campaign_id int,
     auto_followed bool,
     profile_url varchar(255),
     first_visited date,
-    las{schema_name}_visited date,
-    foreign key(user_license) references {schema_name}.users(license),
-    foreign key(batch_id) references {schema_name}.activity(batch_id)
+    lastest_visited date,
+    foreign key(user_license) references test.users(license),
+    foreign key(campaign_id) references test.campaign(campaign_id)
 );
 
 
-CREATE TABLE {schema_name}.profiles_scraped (
+CREATE TABLE test.contact_list (
     id int NOT NULL primary key AUTO_INCREMENT,
 	user_license varchar(255),
-    batch_id int,
+    campaign_id int,
    	profile_url varchar(255),
    	scraped_on date,
    	first_name varchar(255),
@@ -102,29 +105,29 @@ CREATE TABLE {schema_name}.profiles_scraped (
    	title varchar(255),
    	location varchar(255),
    	phone_number int,
-   	foreign key(user_license) references {schema_name}.users(license),
-    foreign key(batch_id) references {schema_name}.activity(batch_id)
+   	foreign key(user_license) references test.users(license),
+    foreign key(campaign_id) references test.campaign(campaign_id)
 );
 
 
-CREATE TABLE {schema_name}.invites (
+CREATE TABLE test.invites (
 	id int NOT NULL primary key AUTO_INCREMENT,
     user_license varchar(255),
-    batch_id int,
+    campaign_id int,
 	profile_url varchar(255),
 	last_updated date,
 	withdrawn bool,
-	foreign key(user_license) references {schema_name}.users(license),
-    foreign key(batch_id) references {schema_name}.activity(batch_id)
+	foreign key(user_license) references test.users(license),
+    foreign key(campaign_id) references test.campaign(campaign_id)
 );
 
-CREATE TABLE {schema_name}.profiles_endorsed (
+CREATE TABLE test.profiles_endorsed (
     id int NOT NULL primary key AUTO_INCREMENT,
 	user_license varchar(255),
-    batch_id int,
+    campaign_id int,
 	profile_url varchar(255),
 	endorsed_on date,
 	skills ENUM('all','top 3'),
-	foreign key(user_license) references {schema_name}.users(license),
-    foreign key(batch_id) references {schema_name}.activity(batch_id)
+	foreign key(user_license) references test.users(license),
+    foreign key(campaign_id) references test.campaign(campaign_id)
 );
