@@ -1,6 +1,6 @@
 
 
-CREATE TABLE test.users (
+CREATE TABLE  IF NOT EXISTS linkedofy.users (
     license varchar(255) not null primary key ,
     name varchar(255),
     email varchar(255),
@@ -8,89 +8,89 @@ CREATE TABLE test.users (
     plan ENUM('trial','enterprise')
 );
 
-CREATE TABLE test.campaign (
+CREATE TABLE  IF NOT EXISTS linkedofy.campaign (
     user_license varchar(255),
     campaign_id int NOT NULL primary key AUTO_INCREMENT,
     campaign_date date,
     module ENUM('auto_connect','broadcast','auto_visit and follow','endorse my contacts','remove connections', 'withdraw autoconnect','create contact list'),
     pages ENUM('search_page','sales_navigator'),
     status ENUM('completed','failed','stopped'),
-    foreign key(user_license) references test.users(license)
+    foreign key(user_license) references linkedofy.users(license)
 );
 
-CREATE TABLE test.messages_template (
+CREATE TABLE  IF NOT EXISTS linkedofy.messages_template (
     user_license varchar(255),
     messages_template_id int not null primary key,
     title varchar(255),
     body text,
     last_used date,
     saved bool,
-    foreign key(user_license) references test.users(license)
+    foreign key(user_license) references linkedofy.users(license)
 );
 
 
-CREATE TABLE test.inmail_template (
+CREATE TABLE  IF NOT EXISTS linkedofy.inmail_template (
     user_license varchar(255),
     inmail_template_id int not null primary key,
     title varchar(255),
     body text,
     last_used date,
     saved bool,
-    foreign key(user_license) references test.users(license)
+    foreign key(user_license) references linkedofy.users(license)
 );
 
 
-CREATE TABLE test.inmail (
+CREATE TABLE  IF NOT EXISTS linkedofy.inmail (
 	id int NOT NULL primary key AUTO_INCREMENT,
     user_license varchar(255),
     campaign_id int,
     inmail_template_id int,
     profile_url varchar(255),
     status ENUM('sent','skipped','failed'),
-    foreign key(user_license) references test.users(license),
-    foreign key(campaign_id) references test.campaign(campaign_id),
-    foreign key(inmail_template_id) references test.inmail_template(inmail_template_id)
+    foreign key(user_license) references linkedofy.users(license),
+    foreign key(campaign_id) references linkedofy.campaign(campaign_id),
+    foreign key(inmail_template_id) references linkedofy.inmail_template(inmail_template_id)
 );
 
 
-CREATE TABLE test.reply (
+CREATE TABLE  IF NOT EXISTS linkedofy.reply (
 	id int NOT NULL primary key AUTO_INCREMENT,
     user_license varchar(255),
     campaign_id int,
     reply text,
     profile_url varchar(255),
     reply_date date,
-    foreign key(user_license) references test.users(license)
+    foreign key(user_license) references linkedofy.users(license)
 );
 
 
-CREATE TABLE test.broadcast (
+CREATE TABLE  IF NOT EXISTS linkedofy.broadcast (
 	id int NOT NULL primary key AUTO_INCREMENT,
     user_license varchar(255),
     campaign_id int,
     messages_template_id int,
     profile_url varchar(255),
     status ENUM('sent','skipped','failed'),
-    foreign key(user_license) references test.users(license),
-    foreign key(campaign_id) references test.campaign(campaign_id),
-    foreign key(messages_template_id) references test.messages_template(messages_template_id)
+    foreign key(user_license) references linkedofy.users(license),
+    foreign key(campaign_id) references linkedofy.campaign(campaign_id),
+    foreign key(messages_template_id) references linkedofy.messages_template(messages_template_id)
 );
 
 
-CREATE TABLE test.profiles_visited (
+CREATE TABLE  IF NOT EXISTS linkedofy.profiles_visited (
     id int NOT NULL primary key AUTO_INCREMENT,
 	user_license varchar(255),
     campaign_id int,
     auto_followed bool,
     profile_url varchar(255),
     first_visited date,
-    lastest_visited date,
-    foreign key(user_license) references test.users(license),
-    foreign key(campaign_id) references test.campaign(campaign_id)
+    laslinkedofy_visited date,
+    foreign key(user_license) references linkedofy.users(license),
+    foreign key(campaign_id) references linkedofy.campaign(campaign_id)
 );
 
 
-CREATE TABLE test.contact_list (
+CREATE TABLE  IF NOT EXISTS linkedofy.contact_list (
     id int NOT NULL primary key AUTO_INCREMENT,
 	user_license varchar(255),
     campaign_id int,
@@ -103,31 +103,31 @@ CREATE TABLE test.contact_list (
    	title varchar(255),
    	location varchar(255),
    	phone_number int,
-   	foreign key(user_license) references test.users(license),
-    foreign key(campaign_id) references test.campaign(campaign_id)
+   	foreign key(user_license) references linkedofy.users(license),
+    foreign key(campaign_id) references linkedofy.campaign(campaign_id)
 );
 
 
-CREATE TABLE test.autoconnect (
+CREATE TABLE  IF NOT EXISTS linkedofy.autoconnect (
 	id int NOT NULL primary key AUTO_INCREMENT,
     user_license varchar(255),
     campaign_id int,
 	profile_url varchar(255),
 	last_updated date,
 	withdrawn bool,
-	foreign key(user_license) references test.users(license),
-    foreign key(campaign_id) references test.campaign(campaign_id)
+	foreign key(user_license) references linkedofy.users(license),
+    foreign key(campaign_id) references linkedofy.campaign(campaign_id)
 );
 
-CREATE TABLE test.profiles_endorsed (
+CREATE TABLE  IF NOT EXISTS linkedofy.profiles_endorsed (
     id int NOT NULL primary key AUTO_INCREMENT,
 	user_license varchar(255),
     campaign_id int,
 	profile_url varchar(255),
 	endorsed_on date,
 	skills ENUM('all','top 3'),
-	foreign key(user_license) references test.users(license),
-    foreign key(campaign_id) references test.campaign(campaign_id)
+	foreign key(user_license) references linkedofy.users(license),
+    foreign key(campaign_id) references linkedofy.campaign(campaign_id)
 );
 
 
