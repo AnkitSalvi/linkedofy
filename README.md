@@ -15,6 +15,7 @@ DB CREATION
 2) Copy and paste the stored procedures from the folder.  
 
 
-Run mysql local server at port 3306.  
+Run mysql local server at port 3306 to connect to the db.  
+Run "nodemon APIs.js" to start the express server and connect to db.  
 Testing the Apis - url http://localhost:3000/Linkedofy
 
