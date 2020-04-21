@@ -11,10 +11,10 @@ To install swagger:
 
 
 DB CREATION  
-1) Run the db scripts to make the tables in your sql editor.  
-2) Copy and paste the stored procedures.  
+1) Run the "dbscript" file in db folder in you sql editor to make the tables.  
+2) Copy and paste the stored procedures from the folder.  
 
 
 Run mysql local server at port 3306.  
-Testing the Apis url http://localhost:3000/Linkedofy
+Testing the Apis - url http://localhost:3000/Linkedofy
 
