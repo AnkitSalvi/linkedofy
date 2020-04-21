@@ -2,7 +2,7 @@
 Steps to run the project locally:    
 
 DEPENDENCIES  
-1)Clone the project and change the directory to src.  
+1)Clone the project and change the directory to src and run "npm install".  
 2)Run npm init.  
 3)Run npm install --save express@4.17.1 mysql@2.18.1 body-parser@1.19.0  
 
