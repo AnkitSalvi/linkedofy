@@ -1,21 +1,20 @@
-# linkedofy  
-Steps to run the project locally:    
+# Linkedofy API
 
-DEPENDENCIES  
-1)Clone the project and change the directory to src and run "npm install".  
-2)Run npm init.  
-3)Run npm install --save express@4.17.1 mysql@2.18.1 body-parser@1.19.0  
+> apis for linkedofy app
 
-To install swagger:
-1) Run npm install swagger-jsdoc swagger-ui-express
+## Getting Started
 
+**Dependencies**
 
-DB CREATION  
-1) Run the "dbscript" file in db folder in you sql editor to make the tables.  
-2) Copy and paste the stored procedures from the folder.  
+1. NodeJS ^10.20.0
+2. npm ^6.14.4
 
+**Project setup**
 
-Run mysql local server at port 3306 to connect to the db.  
-Run "nodemon APIs.js" to start the express server and connect to db.  
-Testing the Apis - url http://localhost:3000/Linkedofy
+1. Clone the project and run "npm install".
+2. Run the "dbscript" file in db folder in you sql editor to make the tables.
+3. Copy and paste the stored procedures from the folder.
+4. Run mysql local server at port 3306 to connect to the db.
+5. Run "node server.js" to start the express server and connect to db.
+6. Testing the Apis - url http://localhost:3000/Linkedofy
 
